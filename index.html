@@ -61,7 +61,6 @@ h2.sec{font-size:clamp(22px,5vw,30px);margin:44px 0 18px;text-align:center}
 .step p code{background:#0b1220;border:1px solid var(--line);border-radius:6px;padding:1px 7px;color:var(--blue2);font-size:14px;direction:ltr;display:inline-block}
 .imgs{display:grid;gap:14px;justify-items:center}
 .imgs img{width:100%;max-width:340px;border-radius:26px;border:1px solid #2a3648;box-shadow:0 18px 40px rgba(0,0,0,.5);background:#000}
-.imgs.two img{max-width:320px}
 .done{background:linear-gradient(135deg,#0e2a3d,#122b22);border:1px solid #1d4a5e;border-radius:24px;padding:26px;text-align:center}
 .done h2{font-size:clamp(21px,5vw,28px);margin-bottom:8px}
 .done p{color:#cbd5e1}
@@ -77,8 +76,6 @@ footer a{color:var(--blue2);text-decoration:none}
 @media(min-width:820px){
   .step{grid-template-columns:1fr 350px;align-items:center;padding:26px}
   .imgs img{max-width:330px}
-  .imgs.two{grid-template-columns:1fr 1fr}
-  .imgs.two img{max-width:100%}
 }
 </style>
 </head>
@@ -331,7 +328,7 @@ function render(code){
   var html="";
   t.steps.forEach(function(s,i){
     var imgs=IMGS[i];
-    var cls=imgs.length>1?"imgs two":"imgs";
+    var cls="imgs"; // two-image steps stack vertically, full width, like single-image steps
     var imgHtml=imgs.map(function(src,j){return "<img src=\""+src+"\" alt=\"\" loading=\""+(i===0&&j===0?"eager":"lazy")+"\">"}).join("");
     html+="<article class=step id=\"step-"+(i+1)+"\"><div><div class=step-num><span class=n>"+t.stepLabel.replace("{n}",i+1)+"</span>"+(s.cond?"<span class=cond>"+t.condBadge+"</span>":"")+"</div><h3>"+s.t+"</h3><p>"+s.d+"</p></div><div class=\""+cls+"\">"+imgHtml+"</div></article>";
   });
