@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark light">
+<script>
+(function(){
+  try{
+    var saved=localStorage.getItem("tn-theme");
+    if(saved==="light"||saved==="dark"){document.documentElement.dataset.theme=saved;return;}
+    if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches)document.documentElement.dataset.theme="light";
+    else document.documentElement.dataset.theme="dark";
+  }catch(e){}
+})();
+</script>
 <title>TeleNest Login Tutorial</title>
 <meta name="description" content="Step-by-step TeleNest login tutorial: how to get your Telegram API ID and API Hash from my.telegram.org and log in to TeleNest.">
 <style>
@@ -337,15 +347,37 @@ function render(code){
   try{localStorage.setItem("tn-lang",code)}catch(e){}
   var u=new URL(location.href);u.searchParams.set("lang",code);history.replaceState(null,"",u);
 }
-function setTheme(th){
+function applyTheme(th){
   document.documentElement.dataset.theme=th;
   var btn=document.getElementById("themeBtn");
   if(btn)btn.textContent=(th==="dark")?"☀️":"🌙";
+}
+function systemTheme(){
+  try{
+    if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches)return "light";
+  }catch(e){}
+  return "dark";
+}
+function setTheme(th){
+  applyTheme(th);
   try{localStorage.setItem("tn-theme",th)}catch(e){}
 }
 (function(){
   var saved=null;try{saved=localStorage.getItem("tn-theme")}catch(e){}
-  setTheme(saved==="light"?"light":"dark");
+  if(saved==="light"||saved==="dark"){
+    applyTheme(saved);
+  }else{
+    applyTheme(systemTheme());
+    try{
+      var mq=window.matchMedia("(prefers-color-scheme: dark)");
+      if(mq&&mq.addEventListener){
+        mq.addEventListener("change",function(){
+          var s2=null;try{s2=localStorage.getItem("tn-theme")}catch(e){}
+          if(s2!=="light"&&s2!=="dark")applyTheme(systemTheme());
+        });
+      }
+    }catch(e){}
+  }
   document.getElementById("themeBtn").onclick=function(){
     setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
   };
