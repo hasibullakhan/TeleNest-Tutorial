@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<title>TeleNest Login Tutorial</title>
+<meta name="description" content="Step-by-step TeleNest login tutorial: how to get your Telegram API ID and API Hash from my.telegram.org and log in to TeleNest.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0e14;--card:#121826;--card2:#0f1622;--line:#1e293b;--text:#e6edf3;--muted:#94a3b8;--blue:#2aabee;--blue2:#5bc8f7;--amber:#fbbf24;--green:#34d399;--radius:20px}
+[data-theme="light"]{--bg:#eef2f7;--card:#ffffff;--card2:#f1f5f9;--line:#dde3ec;--text:#0f172a;--muted:#475569;--blue2:#0284c7}
+[data-theme="light"] header{background:rgba(238,242,247,.92)}
+[data-theme="light"] #langBar button{background:#fff}
+[data-theme="light"] .step p code{background:#f1f5f9}
+[data-theme="light"] .imgs img{border-color:#cbd5e1;box-shadow:0 18px 40px rgba(15,23,42,.15)}
+[data-theme="light"] .done{background:linear-gradient(135deg,#dbeafe,#dcfce7);border-color:#bfdbfe}
+[data-theme="light"] .done p{color:#334155}
+[data-theme="light"] .safe{background:#fef9e7;border-color:#e5c15c}
+[data-theme="light"] .safe h2{color:#92600a}
+[data-theme="light"] .safe ul{color:#6b5310}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans","Helvetica Neue",Arial,sans-serif;line-height:1.6;-webkit-text-size-adjust:100%}
+a{color:var(--blue2)}
+header{position:sticky;top:0;z-index:50;background:rgba(10,14,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.head-in{max-width:900px;margin:0 auto;padding:14px 18px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-size:22px;font-weight:800;letter-spacing:.2px}
+.logo span{color:var(--blue)}
+.tag{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:5px 10px;border-radius:999px;white-space:nowrap}
+#langBar{max-width:900px;margin:0 auto;padding:0 18px 12px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+#langBar::-webkit-scrollbar{display:none}
+#langBar button{flex:0 0 auto;background:#16202e;border:1px solid var(--line);color:var(--text);font-size:14px;font-weight:600;padding:7px 14px;border-radius:999px;cursor:pointer}
+#langBar button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+main{max-width:900px;margin:0 auto;padding:28px 18px 60px}
+.hero{text-align:center;padding:26px 10px 30px}
+.hero h1{font-size:clamp(28px,6vw,44px);line-height:1.2;font-weight:800}
+.hero h1 span{background:linear-gradient(90deg,var(--blue),#7b8cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:clamp(15px,3.5vw,18px);max-width:640px;margin:14px auto 0}
+.need{margin:26px auto 0;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.need h2{font-size:17px;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600}
+.chip b{color:var(--green);margin-inline-end:6px}
+h2.sec{font-size:clamp(22px,5vw,30px);margin:44px 0 18px;text-align:center}
+.step{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px;margin-bottom:20px;display:grid;gap:18px}
+.step-num{display:inline-flex;align-items:center;gap:10px;margin-bottom:10px}
+.step-num .n{background:var(--blue);color:#fff;font-weight:800;font-size:14px;padding:5px 13px;border-radius:999px}
+.step-num .cond{background:#3a2a08;color:var(--amber);border:1px solid #7a5b12;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+.step h3{font-size:clamp(19px,4.5vw,24px);line-height:1.3;margin-bottom:8px}
+.step p{color:var(--muted);font-size:15.5px}
+.step p code{background:#0b1220;border:1px solid var(--line);border-radius:6px;padding:1px 7px;color:var(--blue2);font-size:14px;direction:ltr;display:inline-block}
+.imgs{display:grid;gap:14px;justify-items:center}
+.imgs img{width:100%;max-width:340px;border-radius:26px;border:1px solid #2a3648;box-shadow:0 18px 40px rgba(0,0,0,.5);background:#000}
+.imgs.two img{max-width:320px}
+.done{background:linear-gradient(135deg,#0e2a3d,#122b22);border:1px solid #1d4a5e;border-radius:24px;padding:26px;text-align:center}
+.done h2{font-size:clamp(21px,5vw,28px);margin-bottom:8px}
+.done p{color:#cbd5e1}
+.safe{background:#1a1503;border:1px solid #7a5b12;border-radius:24px;padding:24px}
+.safe h2{font-size:20px;margin-bottom:12px;color:var(--amber)}
+.safe ul{list-style:none;display:grid;gap:10px;color:#e7d9a8;font-size:15px}
+.safe li::before{content:"⚠ ";margin-inline-end:4px}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:12px}
+details summary{cursor:pointer;font-weight:700;font-size:16px}
+details p{color:var(--muted);margin-top:8px;font-size:15px}
+footer{border-top:1px solid var(--line);margin-top:50px;padding-top:22px;text-align:center;color:var(--muted);font-size:13.5px;line-height:1.9}
+footer a{color:var(--blue2);text-decoration:none}
+@media(min-width:820px){
+  .step{grid-template-columns:1fr 350px;align-items:center;padding:26px}
+  .imgs img{max-width:330px}
+  .imgs.two{grid-template-columns:1fr 1fr}
+  .imgs.two img{max-width:100%}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-in">
+    <div class="logo">Tele<span>Nest</span></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="themeBtn" aria-label="Toggle light and dark mode" style="background:var(--card);border:1px solid var(--line);color:var(--text);font-size:18px;line-height:1;padding:7px 11px;border-radius:999px;cursor:pointer">☀️</button>
+      <div class="tag" id="brandTag">Login Tutorial</div>
+    </div>
+  </div>
+  <nav id="langBar" aria-label="Language"></nav>
+</header>
+<main>
+  <section class="hero">
+    <h1 id="heroTitle"></h1>
+    <p id="heroSub"></p>
+    <div class="need">
+      <h2 id="needTitle"></h2>
+      <div class="chips" id="needChips"></div>
+    </div>
+  </section>
+  <h2 class="sec" id="stepsTitle"></h2>
+  <div id="steps"></div>
+  <section class="done">
+    <h2 id="doneTitle"></h2>
+    <p id="doneText"></p>
+  </section>
+  <h2 class="sec" id="safetyTitle" style="margin-top:44px"></h2>
+  <section class="safe"><ul id="safetyList"></ul></section>
+  <h2 class="sec" id="faqTitle"></h2>
+  <div id="faq"></div>
+  <footer id="foot"></footer>
+</main>
+<script>
+var IMGS=[["images/step01.jpg"],["images/step02.jpg"],["images/step03.jpg"],["images/step04.jpg"],["images/step05.jpg"],["images/step06a.jpg","images/step06b.jpg"],["images/step07.jpg"],["images/step08a.jpg","images/step08b.jpg"],["images/step09.jpg"]];
+var LANGS=[
+{code:"en",name:"English",dir:"ltr"},
+{code:"bn",name:"বাংলা",dir:"ltr"},
+{code:"hi",name:"हिन्दी",dir:"ltr"},
+{code:"es",name:"Español",dir:"ltr"},
+{code:"fr",name:"Français",dir:"ltr"},
+{code:"ar",name:"العربية",dir:"rtl"},
+{code:"pt",name:"Português",dir:"ltr"},
+{code:"ru",name:"Русский",dir:"ltr"},
+{code:"ur",name:"اردو",dir:"rtl"},
+{code:"de",name:"Deutsch",dir:"ltr"},
+{code:"zh",name:"中文",dir:"ltr"}
+];
+var T={};
+T.en={tag:"Login Tutorial",heroTitle:"Log in to TeleNest in a few minutes",heroSub:"TeleNest needs your own Telegram API credentials. It sounds technical, but it only takes about two minutes — follow the steps below.",needTitle:"What you need",need:["A Telegram account","Your phone, with Telegram installed","About 2 minutes"],stepsTitle:"Follow the steps",stepLabel:"Step {n}",condBadge:"Only if asked",steps:[
+{t:"Open my.telegram.org",d:"Open my.telegram.org in your browser and enter the phone number of your Telegram account, with the country code."},
+{t:"Get the code from Telegram",d:"Telegram sends the confirmation code to your Telegram app — not by SMS. Open Telegram and look for the Service notification."},
+{t:"Find the web login code",d:"The message is called “Web login code”. The red circle shows exactly where the code is. Never share this code with anyone."},
+{t:"Enter the code and sign in",d:"Type the code into the website and tap “Sign in”. If the code expired, tap “Resend” and use the new one."},
+{t:"Open API development tools",d:"After signing in you will see your Telegram apps. Tap your app to open it. This page is called “Your Telegram Core”."},
+{t:"Copy your api_id and api_hash",d:"Copy your App api_id and App api_hash from your app page. No app yet? Create one first — any App title and Short name will do, the rest is optional."},
+{t:"Paste them into TeleNest",d:"In TeleNest, open “Add Another Account” and paste your API ID, API Hash and the same phone number, then tap “Next”."},
+{t:"Enter the app login code",d:"Telegram now sends a numeric code to your app. Enter it in TeleNest and confirm. The red circle shows where the code arrives."},
+{t:"Only if asked: your Telegram password",d:"If your Telegram account has a password, this screen appears. Enter your own Telegram password — not a new one, and TeleNest has no password of its own. If you never set one, you skip this step.",cond:true}],
+doneTitle:"Done — your drive is ready",doneText:"TeleNest is now connected to your Telegram account. Your files, photos and videos will live in your own Telegram storage.",safetyTitle:"Keep these secret",safety:["Your api_hash is a secret key. Never send it to anyone, and never post it publicly.","Login codes expire in a few minutes and work only once. Nobody from Telegram will ever ask you for one.","The codes and values in these screenshots are edited examples, not real credentials."],faqTitle:"Common questions",faq:[
+{q:"Why does the code come to Telegram, not SMS?",a:"Because you are signing in to Telegram’s own developer site, it sends the code as a Telegram message. Open the Telegram app and check Service notifications."},
+{q:"I have no app on my.telegram.org. What do I do?",a:"Create a new application. Any App title and Short name will do — for example “My Drive” and “mydrive”. The other fields are optional."},
+{q:"A password screen appeared. Did I do something wrong?",a:"No. That is Telegram’s Two-Step Verification. It only appears if you set a password on your Telegram account before. Enter that same password."},
+{q:"I see a login I did not make. What now?",a:"Open Telegram, go to Settings → Devices, and terminate the session you do not recognise. Then change your password."}],
+foot:"Made for TeleNest users · Official Telegram site: my.telegram.org · TeleNest download: telenest.hasibulla.live"};
+
+T.bn={tag:"লগইন টিউটোরিয়াল",heroTitle:"কয়েক মিনিটেই TeleNest-এ লগইন করুন",heroSub:"TeleNest-এর জন্য আপনার নিজের Telegram API তথ্য লাগে। শুনতে কঠিন লাগলেও মাত্র দুই মিনিটের কাজ — নিচের ধাপগুলো অনুসরণ করুন।",needTitle:"যা যা লাগবে",need:["একটি Telegram অ্যাকাউন্ট","আপনার ফোন, যেখানে Telegram ইনস্টল করা আছে","মাত্র ২ মিনিট সময়"],stepsTitle:"ধাপগুলো অনুসরণ করুন",stepLabel:"ধাপ {n}",condBadge:"শুধু চাওয়া হলে",steps:[
+{t:"my.telegram.org খুলুন",d:"ব্রাউজারে my.telegram.org খুলে আপনার Telegram অ্যাকাউন্টের ফোন নাম্বারটি দিন, কান্ট্রি কোডসহ।"},
+{t:"Telegram থেকে কোড নিন",d:"কোডটি SMS-এ আসবে না, আপনার Telegram অ্যাপেই আসবে। Telegram খুলে Service notification দেখুন।"},
+{t:"ওয়েব লগইন কোডটি খুঁজুন",d:"মেসেজটির নাম “Web login code”। লাল গোল চিহ্ন দিয়ে দেখানো হয়েছে কোডটি ঠিক কোথায় আছে। এই কোড কাউকে দেবেন না।"},
+{t:"কোড দিয়ে সাইন ইন করুন",d:"ওয়েবসাইটে কোডটি লিখে “Sign in”-এ চাপ দিন। কোডের মেয়াদ শেষ হয়ে গেলে “Resend”-এ চাপ দিয়ে নতুন কোড ব্যবহার করুন।"},
+{t:"API development tools খুলুন",d:"সাইন ইন করার পর আপনার Telegram অ্যাপগুলো দেখতে পাবেন। আপনার অ্যাপটিতে চাপ দিন। এই পেজটির নাম “Your Telegram Core”।"},
+{t:"api_id আর api_hash কপি করুন",d:"অ্যাপের পেজ থেকে আপনার App api_id আর App api_hash কপি করুন। অ্যাপ না থাকলে আগে একটা বানান — যেকোনো App title আর Short name দিলেই হবে, বাকিগুলো ঐচ্ছিক।"},
+{t:"TeleNest-এ বসান",d:"TeleNest-এ “Add Another Account” খুলে API ID, API Hash আর একই ফোন নাম্বারটি বসিয়ে “Next”-এ চাপ দিন।"},
+{t:"অ্যাপের লগইন কোড দিন",d:"এবার Telegram আপনার অ্যাপে একটি সংখ্যার কোড পাঠাবে। TeleNest-এ সেটি লিখে কনফার্ম করুন। লাল গোল চিহ্নে দেখুন কোডটি কোথায় আসে।"},
+{t:"শুধু চাওয়া হলে: আপনার Telegram পাসওয়ার্ড",d:"আপনার Telegram অ্যাকাউন্টে পাসওয়ার্ড সেট করা থাকলে এই স্ক্রিন আসবে। এখানে আপনার নিজের Telegram পাসওয়ার্ডটিই দিতে হবে — এটা নতুন কোনো পাসওয়ার্ড নয়, আর TeleNest-এর আলাদা কোনো পাসওয়ার্ড নেই। পাসওয়ার্ড সেট না থাকলে এই ধাপ আসবেই না।",cond:true}],
+doneTitle:"হয়ে গেছে — আপনার ড্রাইভ তৈরি",doneText:"TeleNest এখন আপনার Telegram অ্যাকাউন্টের সাথে যুক্ত। আপনার ফাইল, ছবি আর ভিডিও থাকবে আপনার নিজের Telegram স্টোরেজে।",safetyTitle:"এগুলো গোপন রাখুন",safety:["আপনার api_hash একটি গোপন চাবি। এটা কাউকে পাঠাবেন না, কোথাও পাবলিকলি পোস্ট করবেন না।","লগইন কোড কয়েক মিনিট পর নষ্ট হয়ে যায় আর একবারই ব্যবহার করা যায়। Telegram-এর কেউ কখনো আপনার কাছে কোড চাইবে না।","স্ক্রিনশটের কোড আর ভ্যালুগুলো এডিট করা উদাহরণ, আসল তথ্য নয়।"],faqTitle:"সাধারণ প্রশ্ন",faq:[
+{q:"কোড SMS-এ না এসে Telegram-এ কেন আসে?",a:"কারণ আপনি Telegram-এর নিজের ডেভেলপার সাইটে সাইন ইন করছেন, তাই কোডটি Telegram মেসেজ হিসেবে আসে। Telegram অ্যাপ খুলে Service notification দেখুন।"},
+{q:"my.telegram.org-এ আমার কোনো অ্যাপ নেই, কী করবো?",a:"নতুন একটা অ্যাপ্লিকেশন বানান। যেকোনো App title আর Short name দিলেই হবে — যেমন “My Drive” আর “mydrive”। বাকি ঘরগুলো ঐচ্ছিক।"},
+{q:"পাসওয়ার্ডের স্ক্রিন আসছে, আমি কি ভুল করেছি?",a:"না। এটা Telegram-এর Two-Step Verification। আগে থেকে আপনার Telegram অ্যাকাউন্টে পাসওয়ার্ড সেট করা থাকলেই শুধু এটা আসে। সেই একই পাসওয়ার্ড দিন।"},
+{q:"আমার অজান্তে একটা লগইন দেখতে পাচ্ছি, এখন কী করবো?",a:"Telegram খুলে Settings → Devices-এ যান, অচেনা সেশনটি বন্ধ করুন। তারপর পাসওয়ার্ড বদলে ফেলুন।"}],
+foot:"TeleNest ব্যবহারকারীদের জন্য তৈরি · Telegram-এর অফিসিয়াল সাইট: my.telegram.org · TeleNest ডাউনলোড: telenest.hasibulla.live"};
+
+T.hi={tag:"लॉगिन ट्यूटोरियल",heroTitle:"कुछ ही मिनटों में TeleNest में लॉग इन करें",heroSub:"TeleNest के लिए आपके अपने Telegram API क्रेडेंशियल चाहिए। सुनने में मुश्किल लगता है, लेकिन यह सिर्फ दो मिनट का काम है — नीचे दिए स्टेप्स को फॉलो करें।",needTitle:"आपको क्या चाहिए",need:["एक Telegram अकाउंट","आपका फ़ोन, जिसमें Telegram इंस्टॉल हो","लगभग 2 मिनट"],stepsTitle:"स्टेप्स फॉलो करें",stepLabel:"स्टेप {n}",condBadge:"सिर्फ पूछे जाने पर",steps:[
+{t:"my.telegram.org खोलें",d:"ब्राउज़र में my.telegram.org खोलें और अपने Telegram अकाउंट का फ़ोन नंबर कंट्री कोड के साथ डालें।"},
+{t:"Telegram से कोड लें",d:"कन्फर्मेशन कोड SMS से नहीं, बल्कि आपके Telegram ऐप में आएगा। Telegram खोलें और Service notification देखें।"},
+{t:"वेब लॉगिन कोड ढूंढें",d:"मैसेज का नाम “Web login code” है। लाल गोले में दिखाया गया है कि कोड ठीक कहाँ है। यह कोड किसी के साथ शेयर न करें।"},
+{t:"कोड डालकर साइन इन करें",d:"वेबसाइट में कोड डालें और “Sign in” पर टैप करें। कोड एक्सपायर हो जाए तो “Resend” से नया कोड मँगवाएँ।"},
+{t:"API development tools खोलें",d:"साइन इन के बाद आपको अपने Telegram ऐप्स दिखेंगे। अपने ऐप पर टैप करें। इस पेज का नाम “Your Telegram Core” है।"},
+{t:"api_id और api_hash कॉपी करें",d:"अपने ऐप के पेज से App api_id और App api_hash कॉपी करें। कोई ऐप नहीं है? पहले एक बनाएँ — कोई भी App title और Short name चलेगा, बाकी वैकल्पिक हैं।"},
+{t:"TeleNest में डालें",d:"TeleNest में “Add Another Account” खोलें और API ID, API Hash और वही फ़ोन नंबर डालकर “Next” पर टैप करें।"},
+{t:"ऐप का लॉगिन कोड डालें",d:"अब Telegram आपके ऐप में अंकों वाला कोड भेजेगा। उसे TeleNest में डालकर कन्फर्म करें। लाल गोले में देखें कि कोड कहाँ आता है।"},
+{t:"सिर्फ पूछे जाने पर: आपका Telegram पासवर्ड",d:"अगर आपके Telegram अकाउंट पर पासवर्ड सेट है तो यह स्क्रीन आएगी। यहाँ अपना वही Telegram पासवर्ड डालें — यह कोई नया पासवर्ड नहीं है, और TeleNest का अपना कोई अलग पासवर्ड नहीं होता। पासवर्ड सेट नहीं है तो यह स्टेप आएगा ही नहीं।",cond:true}],
+doneTitle:"हो गया — आपकी ड्राइव तैयार है",doneText:"TeleNest अब आपके Telegram अकाउंट से जुड़ गया है। आपकी फ़ाइलें, फ़ोटो और वीडियो आपके अपने Telegram स्टोरेज में रहेंगे।",safetyTitle:"इन्हें गुप्त रखें",safety:["आपका api_hash एक गुप्त चाबी है। इसे किसी को न भेजें और कहीं पब्लिक में पोस्ट न करें।","लॉगिन कोड कुछ ही मिनटों में एक्सपायर हो जाते हैं और सिर्फ एक बार काम करते हैं। Telegram का कोई भी व्यक्ति आपसे कभी कोड नहीं माँगेगा।","स्क्रीनशॉट में दिखाए गए कोड और वैल्यू एडिट किए हुए उदाहरण हैं, असली क्रेडेंशियल नहीं।"],faqTitle:"आम सवाल",faq:[
+{q:"कोड SMS में न आकर Telegram में क्यों आता है?",a:"क्योंकि आप Telegram की अपनी डेवलपर साइट पर साइन इन कर रहे हैं, इसलिए कोड Telegram मैसेज के रूप में आता है। Telegram ऐप खोलें और Service notification देखें।"},
+{q:"my.telegram.org पर मेरा कोई ऐप नहीं है, क्या करूँ?",a:"नया एप्लिकेशन बनाएँ। कोई भी App title और Short name चलेगा — जैसे “My Drive” और “mydrive”। बाकी फ़ील्ड वैकल्पिक हैं।"},
+{q:"पासवर्ड वाली स्क्रीन आ गई, क्या मैंने कुछ गलत किया?",a:"नहीं। यह Telegram का Two-Step Verification है। यह तभी आता है जब आपने पहले अपने Telegram अकाउंट पर पासवर्ड सेट किया हो। वही पासवर्ड डालें।"},
+{q:"मुझे एक ऐसा लॉगिन दिख रहा है जो मैंने नहीं किया, अब क्या करूँ?",a:"Telegram खोलें, Settings → Devices में जाएँ और अनजान सेशन को खत्म करें। फिर अपना पासवर्ड बदल लें।"}],
+foot:"TeleNest यूज़र्स के लिए बनाया गया · Telegram की आधिकारिक साइट: my.telegram.org · TeleNest डाउनलोड: telenest.hasibulla.live"};
+
+T.es={tag:"Tutorial de inicio de sesión",heroTitle:"Entra en TeleNest en pocos minutos",heroSub:"TeleNest necesita tus propias credenciales de la API de Telegram. Suena técnico, pero solo te llevará unos dos minutos: sigue los pasos.",needTitle:"Qué necesitas",need:["Una cuenta de Telegram","Tu teléfono, con Telegram instalado","Unos 2 minutos"],stepsTitle:"Sigue los pasos",stepLabel:"Paso {n}",condBadge:"Solo si se te pide",steps:[
+{t:"Abre my.telegram.org",d:"Abre my.telegram.org en tu navegador y escribe el número de teléfono de tu cuenta de Telegram, con el código de país."},
+{t:"Recibe el código en Telegram",d:"El código de confirmación no llega por SMS: llega a tu aplicación de Telegram. Ábrela y busca la notificación de servicio."},
+{t:"Encuentra el código de acceso web",d:"El mensaje se llama “Web login code”. El círculo rojo te muestra exactamente dónde está el código. No lo compartas con nadie."},
+{t:"Escribe el código e inicia sesión",d:"Escribe el código en la web y pulsa “Sign in”. Si caducó, pulsa “Resend” y usa el nuevo."},
+{t:"Abre las herramientas de desarrollo de API",d:"Al iniciar sesión verás tus aplicaciones de Telegram. Toca la tuya para abrirla. Esta página se llama “Your Telegram Core”."},
+{t:"Copia tu api_id y tu api_hash",d:"Copia tu App api_id y tu App api_hash de la página de tu aplicación. ¿No tienes ninguna? Crea una primero: cualquier App title y Short name sirve, el resto es opcional."},
+{t:"Pégalos en TeleNest",d:"En TeleNest, abre “Add Another Account” y pega tu API ID, tu API Hash y el mismo número de teléfono. Luego pulsa “Next”."},
+{t:"Escribe el código de la aplicación",d:"Ahora Telegram enviará un código numérico a tu aplicación. Escríbelo en TeleNest y confírmalo. El círculo rojo muestra dónde llega el código."},
+{t:"Solo si te lo pide: tu contraseña de Telegram",d:"Si tu cuenta de Telegram tiene contraseña, aparecerá esta pantalla. Escribe tu propia contraseña de Telegram: no es una contraseña nueva, y TeleNest no tiene una contraseña propia. Si nunca pusiste una, este paso no aparecerá.",cond:true}],
+doneTitle:"Listo, tu nube está preparada",doneText:"TeleNest ya está conectado a tu cuenta de Telegram. Tus archivos, fotos y vídeos quedarán en tu propio almacenamiento de Telegram.",safetyTitle:"Mantén esto en secreto",safety:["Tu api_hash es una clave secreta. No se la envíes a nadie ni la publiques en ningún sitio.","Los códigos de acceso caducan en pocos minutos y solo sirven una vez. Nadie de Telegram te pedirá nunca uno.","Los códigos y valores de las capturas son ejemplos editados, no credenciales reales."],faqTitle:"Preguntas frecuentes",faq:[
+{q:"¿Por qué el código llega a Telegram y no por SMS?",a:"Porque estás entrando en la propia web de desarrolladores de Telegram, así que el código llega como mensaje de Telegram. Abre la aplicación y revisa las notificaciones de servicio."},
+{q:"No tengo ninguna aplicación en my.telegram.org, ¿qué hago?",a:"Crea una aplicación nueva. Cualquier App title y Short name sirve, por ejemplo “My Drive” y “mydrive”. El resto es opcional."},
+{q:"Me apareció una pantalla de contraseña, ¿hice algo mal?",a:"No. Es la verificación en dos pasos de Telegram. Solo aparece si antes pusiste una contraseña en tu cuenta de Telegram. Escribe esa misma contraseña."},
+{q:"Veo un inicio de sesión que no hice yo, ¿qué hago?",a:"Abre Telegram, ve a Ajustes → Dispositivos y cierra la sesión que no reconozcas. Después, cambia tu contraseña."}],
+foot:"Hecho para usuarios de TeleNest · Web oficial de Telegram: my.telegram.org · Descarga de TeleNest: telenest.hasibulla.live"};
+
+T.fr={tag:"Tutoriel de connexion",heroTitle:"Connectez-vous à TeleNest en quelques minutes",heroSub:"TeleNest a besoin de vos propres identifiants de l’API Telegram. Cela semble technique, mais cela ne prend que deux minutes : suivez les étapes.",needTitle:"Ce qu’il vous faut",need:["Un compte Telegram","Votre téléphone, avec Telegram installé","Environ 2 minutes"],stepsTitle:"Suivez les étapes",stepLabel:"Étape {n}",condBadge:"Seulement si demandé",steps:[
+{t:"Ouvrez my.telegram.org",d:"Ouvrez my.telegram.org dans votre navigateur et saisissez le numéro de téléphone de votre compte Telegram, avec l’indicatif du pays."},
+{t:"Recevez le code dans Telegram",d:"Le code de confirmation n’arrive pas par SMS : il arrive dans votre application Telegram. Ouvrez-la et cherchez la notification de service."},
+{t:"Trouvez le code de connexion web",d:"Le message s’appelle « Web login code ». Le cercle rouge vous montre exactement où se trouve le code. Ne le partagez avec personne."},
+{t:"Saisissez le code et connectez-vous",d:"Saisissez le code sur le site puis appuyez sur « Sign in ». Si le code a expiré, appuyez sur « Resend » et utilisez le nouveau."},
+{t:"Ouvrez les outils de développement de l’API",d:"Une fois connecté, vous verrez vos applications Telegram. Touchez la vôtre pour l’ouvrir. Cette page s’appelle « Your Telegram Core »."},
+{t:"Copiez votre api_id et votre api_hash",d:"Copiez votre App api_id et votre App api_hash depuis la page de votre application. Aucune application ? Créez-en une d’abord : n’importe quel App title et Short name suffit, le reste est facultatif."},
+{t:"Collez-les dans TeleNest",d:"Dans TeleNest, ouvrez « Add Another Account » puis collez votre API ID, votre API Hash et le même numéro de téléphone, et appuyez sur « Next »."},
+{t:"Saisissez le code de l’application",d:"Telegram envoie alors un code numérique dans votre application. Saisissez-le dans TeleNest et confirmez. Le cercle rouge montre où le code arrive."},
+{t:"Seulement si on vous le demande : votre mot de passe Telegram",d:"Si votre compte Telegram a un mot de passe, cet écran apparaît. Saisissez votre propre mot de passe Telegram : ce n’est pas un nouveau mot de passe, et TeleNest n’a pas de mot de passe à lui. Si vous n’en avez jamais défini, cette étape n’apparaîtra pas.",cond:true}],
+doneTitle:"C’est fait, votre espace est prêt",doneText:"TeleNest est maintenant relié à votre compte Telegram. Vos fichiers, photos et vidéos resteront dans votre propre stockage Telegram.",safetyTitle:"Gardez ceci secret",safety:["Votre api_hash est une clé secrète. Ne l’envoyez à personne et ne la publiez nulle part.","Les codes de connexion expirent au bout de quelques minutes et ne servent qu’une fois. Personne chez Telegram ne vous en demandera jamais un.","Les codes et les valeurs des captures sont des exemples modifiés, pas de vrais identifiants."],faqTitle:"Questions fréquentes",faq:[
+{q:"Pourquoi le code arrive-t-il dans Telegram et pas par SMS ?",a:"Parce que vous vous connectez au propre site développeurs de Telegram : le code arrive donc comme un message Telegram. Ouvrez l’application et vérifiez les notifications de service."},
+{q:"Je n’ai aucune application sur my.telegram.org, que faire ?",a:"Créez une nouvelle application. N’importe quel App title et Short name convient, par exemple « My Drive » et « mydrive ». Le reste est facultatif."},
+{q:"Un écran de mot de passe est apparu, ai-je fait une erreur ?",a:"Non. C’est la vérification en deux étapes de Telegram. Elle n’apparaît que si vous avez déjà défini un mot de passe sur votre compte Telegram. Saisissez ce même mot de passe."},
+{q:"Je vois une connexion que je n’ai pas faite, que faire ?",a:"Ouvrez Telegram, allez dans Réglages → Appareils, et mettez fin à la session que vous ne reconnaissez pas. Changez ensuite votre mot de passe."}],
+foot:"Fait pour les utilisateurs de TeleNest · Site officiel de Telegram : my.telegram.org · Téléchargement de TeleNest : telenest.hasibulla.live"};
+T.ar={tag:"دليل تسجيل الدخول",heroTitle:"سجّل الدخول إلى TeleNest في بضع دقائق",heroSub:"يحتاج TeleNest إلى بيانات واجهة Telegram الخاصة بك. قد يبدو الأمر تقنيًا، لكنه لن يستغرق أكثر من دقيقتين — اتبع الخطوات التالية.",needTitle:"ما تحتاج إليه",need:["حساب Telegram","هاتفك، وتطبيق Telegram مثبّت عليه","حوالي دقيقتين"],stepsTitle:"اتبع الخطوات",stepLabel:"الخطوة {n}",condBadge:"فقط عند الطلب",steps:[
+{t:"افتح my.telegram.org",d:"افتح my.telegram.org في المتصفح وأدخل رقم هاتف حسابك في Telegram مع رمز الدولة."},
+{t:"احصل على الرمز من Telegram",d:"لن يصلك رمز التأكيد برسالة SMS، بل داخل تطبيق Telegram نفسه. افتح التطبيق وابحث عن إشعار الخدمة."},
+{t:"اعثر على رمز تسجيل الدخول للويب",d:"اسم الرسالة هو “Web login code”. الدائرة الحمراء توضح لك بالضبط أين يوجد الرمز. لا تشارك هذا الرمز مع أي أحد."},
+{t:"أدخل الرمز وسجّل الدخول",d:"اكتب الرمز في الموقع واضغط “Sign in”. إذا انتهت صلاحية الرمز، اضغط “Resend” واستخدم الرمز الجديد."},
+{t:"افتح أدوات تطوير الواجهة",d:"بعد تسجيل الدخول ستظهر تطبيقات Telegram الخاصة بك. اضغط على تطبيقك لفتحه. اسم هذه الصفحة هو “Your Telegram Core”."},
+{t:"انسخ api_id و api_hash",d:"انسخ App api_id و App api_hash من صفحة تطبيقك. لا يوجد تطبيق بعد؟ أنشئ واحدًا أولًا — أي App title و Short name يكفيان، وباقي الحقول اختيارية."},
+{t:"ألصقهما في TeleNest",d:"في TeleNest، افتح “Add Another Account” وألصق API ID و API Hash ونفس رقم الهاتف، ثم اضغط “Next”."},
+{t:"أدخل رمز تسجيل الدخول للتطبيق",d:"سيرسل Telegram الآن رمزًا رقميًا إلى تطبيقك. أدخله في TeleNest وأكّد. الدائرة الحمراء توضح أين يصل الرمز."},
+{t:"فقط عند الطلب: كلمة مرور Telegram الخاصة بك",d:"إذا كان حسابك في Telegram محميًا بكلمة مرور، ستظهر هذه الشاشة. أدخل كلمة مرور Telegram الخاصة بك هنا — فهي ليست كلمة مرور جديدة، وليس لدى TeleNest كلمة مرور خاصة به. وإذا لم تضع كلمة مرور من قبل، فلن تظهر هذه الخطوة أصلًا.",cond:true}],
+doneTitle:"تم — مساحتك جاهزة",doneText:"أصبح TeleNest الآن متصلًا بحسابك في Telegram. ستبقى ملفاتك وصورك وفيديوهاتك في مساحة Telegram الخاصة بك.",safetyTitle:"حافظ على سرية هذه البيانات",safety:["api_hash مفتاح سري. لا ترسله لأي أحد ولا تنشره في أي مكان عام.","رموز تسجيل الدخول تنتهي صلاحيتها خلال دقائق وتعمل لمرة واحدة فقط. لن يطلب منك أحد من Telegram أي رمز أبدًا.","الرموز والقيم الظاهرة في لقطات الشاشة أمثلة معدّلة، وليست بيانات حقيقية."],faqTitle:"أسئلة شائعة",faq:[
+{q:"لماذا يصل الرمز إلى Telegram وليس برسالة SMS؟",a:"لأنك تسجّل الدخول إلى موقع مطوري Telegram نفسه، لذلك يصل الرمز كرسالة Telegram. افتح التطبيق وتحقق من إشعارات الخدمة."},
+{q:"ليس لدي أي تطبيق في my.telegram.org، ماذا أفعل؟",a:"أنشئ تطبيقًا جديدًا. أي App title و Short name يكفيان، مثل “My Drive” و “mydrive”. باقي الحقول اختيارية."},
+{q:"ظهرت شاشة كلمة المرور، هل أخطأت في شيء؟",a:"لا. هذا هو التحقق بخطوتين من Telegram. يظهر فقط إذا كنت قد وضعت كلمة مرور على حسابك من قبل. أدخل كلمة المرور نفسها."},
+{q:"أرى تسجيل دخول لم أقم به، ماذا أفعل؟",a:"افتح Telegram، ثم اذهب إلى الإعدادات ← الأجهزة، وأنهِ الجلسة التي لا تعرفها. ثم غيّر كلمة المرور."}],
+foot:"صُنع لمستخدمي TeleNest · الموقع الرسمي لـ Telegram: my.telegram.org · تحميل TeleNest: telenest.hasibulla.live"};
+
+T.pt={tag:"Tutorial de login",heroTitle:"Entre no TeleNest em poucos minutos",heroSub:"O TeleNest precisa das suas próprias credenciais da API do Telegram. Parece técnico, mas leva só uns dois minutos — siga os passos abaixo.",needTitle:"O que você precisa",need:["Uma conta do Telegram","Seu celular, com o Telegram instalado","Uns 2 minutos"],stepsTitle:"Siga os passos",stepLabel:"Passo {n}",condBadge:"Só se for pedido",steps:[
+{t:"Abra o my.telegram.org",d:"Abra o my.telegram.org no navegador e digite o número de telefone da sua conta do Telegram, com o código do país."},
+{t:"Receba o código no Telegram",d:"O código de confirmação não chega por SMS: ele chega no seu aplicativo do Telegram. Abra o app e procure a notificação de serviço."},
+{t:"Encontre o código de login da web",d:"A mensagem se chama “Web login code”. O círculo vermelho mostra exatamente onde está o código. Não compartilhe esse código com ninguém."},
+{t:"Digite o código e entre",d:"Digite o código no site e toque em “Sign in”. Se o código expirou, toque em “Resend” e use o novo."},
+{t:"Abra as ferramentas de desenvolvimento da API",d:"Depois de entrar, você verá seus aplicativos do Telegram. Toque no seu para abri-lo. Essa página se chama “Your Telegram Core”."},
+{t:"Copie seu api_id e seu api_hash",d:"Copie seu App api_id e seu App api_hash na página do seu aplicativo. Ainda não tem nenhum? Crie um primeiro: qualquer App title e Short name serve, o resto é opcional."},
+{t:"Cole no TeleNest",d:"No TeleNest, abra “Add Another Account” e cole seu API ID, seu API Hash e o mesmo número de telefone. Depois toque em “Next”."},
+{t:"Digite o código de login do app",d:"Agora o Telegram vai enviar um código numérico para o seu aplicativo. Digite-o no TeleNest e confirme. O círculo vermelho mostra onde o código chega."},
+{t:"Só se for pedido: sua senha do Telegram",d:"Se a sua conta do Telegram tem senha, esta tela vai aparecer. Digite a sua própria senha do Telegram: não é uma senha nova, e o TeleNest não tem uma senha própria. Se você nunca definiu uma, este passo nem vai aparecer.",cond:true}],
+doneTitle:"Pronto — sua nuvem está pronta",doneText:"O TeleNest já está conectado à sua conta do Telegram. Seus arquivos, fotos e vídeos ficarão no seu próprio armazenamento do Telegram.",safetyTitle:"Mantenha isto em segredo",safety:["Seu api_hash é uma chave secreta. Não envie para ninguém nem publique em lugar nenhum.","Os códigos de login expiram em poucos minutos e só funcionam uma vez. Ninguém do Telegram vai pedir um código para você.","Os códigos e valores das capturas são exemplos editados, não credenciais reais."],faqTitle:"Perguntas frequentes",faq:[
+{q:"Por que o código chega no Telegram e não por SMS?",a:"Porque você está entrando no próprio site de desenvolvedores do Telegram, então o código chega como mensagem do Telegram. Abra o app e veja as notificações de serviço."},
+{q:"Não tenho nenhum aplicativo no my.telegram.org, o que faço?",a:"Crie um aplicativo novo. Qualquer App title e Short name serve, por exemplo “My Drive” e “mydrive”. O resto é opcional."},
+{q:"Apareceu uma tela de senha, eu fiz algo errado?",a:"Não. É a verificação em duas etapas do Telegram. Ela só aparece se você já tinha definido uma senha na sua conta do Telegram. Digite essa mesma senha."},
+{q:"Vi um login que não fui eu, o que faço?",a:"Abra o Telegram, vá em Configurações → Dispositivos e encerre a sessão que você não reconhece. Depois, troque sua senha."}],
+foot:"Feito para usuários do TeleNest · Site oficial do Telegram: my.telegram.org · Download do TeleNest: telenest.hasibulla.live"};
+
+T.ru={tag:"Руководство по входу",heroTitle:"Войдите в TeleNest за несколько минут",heroSub:"Для TeleNest нужны ваши собственные данные API Telegram. Звучит сложно, но это займёт всего пару минут — просто следуйте шагам ниже.",needTitle:"Что вам понадобится",need:["Аккаунт Telegram","Ваш телефон с установленным Telegram","Около 2 минут"],stepsTitle:"Следуйте шагам",stepLabel:"Шаг {n}",condBadge:"Только если попросят",steps:[
+{t:"Откройте my.telegram.org",d:"Откройте my.telegram.org в браузере и введите номер телефона вашего аккаунта Telegram с кодом страны."},
+{t:"Получите код в Telegram",d:"Код подтверждения придёт не по SMS, а в само приложение Telegram. Откройте его и найдите служебное уведомление."},
+{t:"Найдите веб-код входа",d:"Сообщение называется «Web login code». Красный круг показывает, где именно находится код. Никому не сообщайте этот код."},
+{t:"Введите код и войдите",d:"Введите код на сайте и нажмите «Sign in». Если код истёк, нажмите «Resend» и используйте новый."},
+{t:"Откройте инструменты разработчика API",d:"После входа вы увидите свои приложения Telegram. Нажмите на своё, чтобы открыть его. Эта страница называется «Your Telegram Core»."},
+{t:"Скопируйте api_id и api_hash",d:"Скопируйте App api_id и App api_hash со страницы приложения. Приложения ещё нет? Сначала создайте его — подойдут любые App title и Short name, остальное необязательно."},
+{t:"Вставьте их в TeleNest",d:"В TeleNest откройте «Add Another Account» и вставьте API ID, API Hash и тот же номер телефона, затем нажмите «Next»."},
+{t:"Введите код входа из приложения",d:"Теперь Telegram отправит числовой код в ваше приложение. Введите его в TeleNest и подтвердите. Красный круг показывает, куда приходит код."},
+{t:"Только если попросят: ваш пароль Telegram",d:"Если на вашем аккаунте Telegram установлен пароль, появится этот экран. Введите свой собственный пароль Telegram — это не новый пароль, и у TeleNest нет отдельного пароля. Если вы пароль никогда не задавали, этот шаг просто не появится.",cond:true}],
+doneTitle:"Готово — ваше хранилище настроено",doneText:"TeleNest теперь подключён к вашему аккаунту Telegram. Ваши файлы, фото и видео будут храниться в вашем собственном хранилище Telegram.",safetyTitle:"Храните это в тайне",safety:["Ваш api_hash — секретный ключ. Не отправляйте его никому и нигде не публикуйте.","Коды входа действуют всего несколько минут и только один раз. Сотрудники Telegram никогда не попросят у вас код.","Коды и значения на скриншотах — отредактированные примеры, а не настоящие данные."],faqTitle:"Частые вопросы",faq:[
+{q:"Почему код приходит в Telegram, а не по SMS?",a:"Потому что вы входите на собственный сайт разработчиков Telegram, поэтому код приходит сообщением в Telegram. Откройте приложение и проверьте служебные уведомления."},
+{q:"У меня нет приложений на my.telegram.org. Что делать?",a:"Создайте новое приложение. Подойдут любые App title и Short name, например «My Drive» и «mydrive». Остальные поля необязательны."},
+{q:"Появился экран пароля. Я что-то сделал не так?",a:"Нет. Это двухэтапная проверка Telegram. Она появляется, только если вы раньше уже задавали пароль на своём аккаунте Telegram. Введите тот же самый пароль."},
+{q:"Я вижу вход, который совершал не я. Что делать?",a:"Откройте Telegram, перейдите в «Настройки» → «Устройства» и завершите незнакомый сеанс. Затем смените пароль."}],
+foot:"Сделано для пользователей TeleNest · Официальный сайт Telegram: my.telegram.org · Скачать TeleNest: telenest.hasibulla.live"};
+
+T.ur={tag:"لاگ ان ٹیوٹوریل",heroTitle:"چند منٹ میں TeleNest میں لاگ ان کریں",heroSub:"TeleNest کے لیے آپ کو اپنی Telegram API کی تفصیلات درکار ہیں۔ سننے میں مشکل لگتا ہے، لیکن یہ صرف دو منٹ کا کام ہے — نیچے دیے گئے مراحل پر عمل کریں۔",needTitle:"آپ کو کیا چاہیے",need:["ایک Telegram اکاؤنٹ","آپ کا فون، جس میں Telegram انسٹال ہو","تقریباً 2 منٹ"],stepsTitle:"مراحل پر عمل کریں",stepLabel:"مرحلہ {n}",condBadge:"صرف پوچھے جانے پر",steps:[
+{t:"my.telegram.org کھولیں",d:"براؤزر میں my.telegram.org کھولیں اور اپنے Telegram اکاؤنٹ کا فون نمبر ملکی کوڈ کے ساتھ درج کریں۔"},
+{t:"Telegram سے کوڈ حاصل کریں",d:"تصدیقی کوڈ SMS سے نہیں بلکہ آپ کی Telegram ایپ میں آئے گا۔ Telegram کھولیں اور سروس نوٹیفکیشن دیکھیں۔"},
+{t:"ویب لاگ ان کوڈ تلاش کریں",d:"پیغام کا نام “Web login code” ہے۔ سرخ دائرہ بالکل دکھاتا ہے کہ کوڈ کہاں ہے۔ یہ کوڈ کسی کے ساتھ شیئر نہ کریں۔"},
+{t:"کوڈ درج کریں اور سائن ان کریں",d:"ویب سائٹ میں کوڈ لکھیں اور “Sign in” پر ٹیپ کریں۔ اگر کوڈ ختم ہو جائے تو “Resend” سے نیا کوڈ منگوائیں۔"},
+{t:"API development tools کھولیں",d:"سائن ان کے بعد آپ کو اپنی Telegram ایپس نظر آئیں گی۔ اپنی ایپ پر ٹیپ کریں۔ اس صفحے کا نام “Your Telegram Core” ہے۔"},
+{t:"api_id اور api_hash کاپی کریں",d:"ایپ کے صفحے سے اپنا App api_id اور App api_hash کاپی کریں۔ ابھی کوئی ایپ نہیں ہے؟ پہلے ایک بنائیں — کوئی بھی App title اور Short name چلے گا، باقی اختیاری ہیں۔"},
+{t:"TeleNest میں پیسٹ کریں",d:"TeleNest میں “Add Another Account” کھولیں اور API ID، API Hash اور وہی فون نمبر ڈال کر “Next” پر ٹیپ کریں۔"},
+{t:"ایپ کا لاگ ان کوڈ درج کریں",d:"اب Telegram آپ کی ایپ میں ہندسوں والا کوڈ بھیجے گا۔ اسے TeleNest میں لکھ کر کنفرم کریں۔ سرخ دائرہ دکھاتا ہے کہ کوڈ کہاں آتا ہے۔"},
+{t:"صرف پوچھے جانے پر: آپ کا Telegram پاس ورڈ",d:"اگر آپ کے Telegram اکاؤنٹ پر پاس ورڈ لگا ہوا ہے تو یہ اسکرین آئے گی۔ یہاں اپنا وہی Telegram پاس ورڈ درج کریں — یہ کوئی نیا پاس ورڈ نہیں ہے، اور TeleNest کا اپنا کوئی الگ پاس ورڈ نہیں ہوتا۔ اگر آپ نے کبھی پاس ورڈ نہیں لگایا تو یہ مرحلہ آئے گا ہی نہیں۔",cond:true}],
+doneTitle:"ہو گیا — آپ کی ڈرائیو تیار ہے",doneText:"TeleNest اب آپ کے Telegram اکاؤنٹ سے جڑ گیا ہے۔ آپ کی فائلیں، تصاویر اور ویڈیوز آپ کی اپنی Telegram اسٹوریج میں رہیں گی۔",safetyTitle:"ان باتوں کو خفیہ رکھیں",safety:["آپ کا api_hash ایک خفیہ چابی ہے۔ اسے کسی کو نہ بھیجیں اور کہیں پبلک میں پوسٹ نہ کریں۔","لاگ ان کوڈ چند منٹ میں ختم ہو جاتے ہیں اور صرف ایک بار کام کرتے ہیں۔ Telegram کا کوئی بھی شخص آپ سے کبھی کوڈ نہیں مانگے گا۔","اسکرین شاٹس میں دکھائے گئے کوڈ اور ویلیوز ایڈٹ شدہ مثالیں ہیں، اصلی تفصیلات نہیں۔"],faqTitle:"عام سوالات",faq:[
+{q:"کوڈ SMS کے بجائے Telegram میں کیوں آتا ہے؟",a:"کیونکہ آپ Telegram کی اپنی ڈویلپر سائٹ پر سائن ان کر رہے ہیں، اس لیے کوڈ Telegram پیغام کے طور پر آتا ہے۔ Telegram ایپ کھولیں اور سروس نوٹیفکیشن دیکھیں۔"},
+{q:"my.telegram.org پر میری کوئی ایپ نہیں ہے، کیا کروں؟",a:"نئی ایپلیکیشن بنائیں۔ کوئی بھی App title اور Short name چلے گا — جیسے “My Drive” اور “mydrive”۔ باقی فیلڈز اختیاری ہیں۔"},
+{q:"پاس ورڈ والی اسکرین آ گئی، کیا میں نے کچھ غلط کیا؟",a:"نہیں۔ یہ Telegram کا Two-Step Verification ہے۔ یہ صرف اس وقت آتا ہے جب آپ نے پہلے اپنے Telegram اکاؤنٹ پر پاس ورڈ لگایا ہو۔ وہی پاس ورڈ درج کریں۔"},
+{q:"مجھے ایک ایسا لاگ ان نظر آ رہا ہے جو میں نے نہیں کیا، اب کیا کروں؟",a:"Telegram کھولیں، Settings → Devices میں جائیں اور نامعلوم سیشن ختم کریں۔ پھر اپنا پاس ورڈ بدل لیں۔"}],
+foot:"TeleNest صارفین کے لیے بنایا گیا · Telegram کی آفیشل سائٹ: my.telegram.org · TeleNest ڈاؤن لوڈ: telenest.hasibulla.live"};
+
+T.de={tag:"Anmelde-Tutorial",heroTitle:"In wenigen Minuten bei TeleNest anmelden",heroSub:"TeleNest braucht Ihre eigenen Telegram-API-Zugangsdaten. Das klingt technisch, dauert aber nur etwa zwei Minuten — folgen Sie einfach den Schritten.",needTitle:"Was Sie brauchen",need:["Ein Telegram-Konto","Ihr Handy mit installiertem Telegram","Etwa 2 Minuten"],stepsTitle:"Schritt für Schritt",stepLabel:"Schritt {n}",condBadge:"Nur wenn danach gefragt wird",steps:[
+{t:"my.telegram.org öffnen",d:"Öffnen Sie my.telegram.org im Browser und geben Sie die Telefonnummer Ihres Telegram-Kontos mit Ländervorwahl ein."},
+{t:"Code in Telegram erhalten",d:"Der Bestätigungscode kommt nicht per SMS, sondern direkt in Ihre Telegram-App. Öffnen Sie Telegram und suchen Sie die Dienstbenachrichtigung."},
+{t:"Web-Anmeldecode finden",d:"Die Nachricht heißt „Web login code“. Der rote Kreis zeigt genau, wo der Code steht. Teilen Sie diesen Code mit niemandem."},
+{t:"Code eingeben und anmelden",d:"Geben Sie den Code auf der Website ein und tippen Sie auf „Sign in“. Ist der Code abgelaufen, tippen Sie auf „Resend“ und verwenden Sie den neuen."},
+{t:"API-Entwicklertools öffnen",d:"Nach der Anmeldung sehen Sie Ihre Telegram-Apps. Tippen Sie auf Ihre App, um sie zu öffnen. Diese Seite heißt „Your Telegram Core“."},
+{t:"api_id und api_hash kopieren",d:"Kopieren Sie App api_id und App api_hash von der Seite Ihrer App. Noch keine App? Erstellen Sie zuerst eine — ein beliebiger App title und Short name reichen, der Rest ist optional."},
+{t:"In TeleNest einfügen",d:"Öffnen Sie in TeleNest „Add Another Account“ und fügen Sie API ID, API Hash und dieselbe Telefonnummer ein. Tippen Sie dann auf „Next“."},
+{t:"App-Anmeldecode eingeben",d:"Telegram schickt jetzt einen Zahlencode an Ihre App. Geben Sie ihn in TeleNest ein und bestätigen Sie. Der rote Kreis zeigt, wo der Code ankommt."},
+{t:"Nur wenn danach gefragt wird: Ihr Telegram-Passwort",d:"Falls Ihr Telegram-Konto ein Passwort hat, erscheint dieser Bildschirm. Geben Sie hier Ihr eigenes Telegram-Passwort ein — es ist kein neues Passwort, und TeleNest hat kein eigenes Passwort. Falls Sie nie eines festgelegt haben, erscheint dieser Schritt gar nicht.",cond:true}],
+doneTitle:"Fertig — Ihr Speicher ist bereit",doneText:"TeleNest ist jetzt mit Ihrem Telegram-Konto verbunden. Ihre Dateien, Fotos und Videos liegen in Ihrem eigenen Telegram-Speicher.",safetyTitle:"Halten Sie dies geheim",safety:["Ihr api_hash ist ein geheimer Schlüssel. Schicken Sie ihn niemandem und veröffentlichen Sie ihn nirgends.","Anmeldecodes laufen nach wenigen Minuten ab und funktionieren nur einmal. Niemand von Telegram wird Sie je nach einem Code fragen.","Die Codes und Werte in den Screenshots sind bearbeitete Beispiele, keine echten Zugangsdaten."],faqTitle:"Häufige Fragen",faq:[
+{q:"Warum kommt der Code in Telegram an und nicht per SMS?",a:"Weil Sie sich auf Telegrams eigener Entwicklerseite anmelden — der Code kommt daher als Telegram-Nachricht. Öffnen Sie die App und prüfen Sie die Dienstbenachrichtigungen."},
+{q:"Ich habe keine App auf my.telegram.org. Was tun?",a:"Erstellen Sie eine neue Anwendung. Ein beliebiger App title und Short name genügen, zum Beispiel „My Drive“ und „mydrive“. Der Rest ist optional."},
+{q:"Es erscheint ein Passwort-Bildschirm. Habe ich etwas falsch gemacht?",a:"Nein. Das ist Telegrams Zwei-Schritt-Verifizierung. Sie erscheint nur, wenn Sie früher schon ein Passwort für Ihr Telegram-Konto festgelegt haben. Geben Sie genau dieses Passwort ein."},
+{q:"Ich sehe eine Anmeldung, die nicht von mir stammt. Was tun?",a:"Öffnen Sie Telegram, gehen Sie zu Einstellungen → Geräte und beenden Sie die Sitzung, die Sie nicht kennen. Ändern Sie danach Ihr Passwort."}],
+foot:"Gemacht für TeleNest-Nutzer · Offizielle Telegram-Seite: my.telegram.org · TeleNest-Download: telenest.hasibulla.live"};
+
+T.zh={tag:"登录教程",heroTitle:"几分钟内登录 TeleNest",heroSub:"TeleNest 需要你自己的 Telegram API 凭证。听起来有点技术，但只要两分钟左右，跟着下面的步骤走就行。",needTitle:"你需要准备",need:["一个 Telegram 账号","装有 Telegram 的手机","大约 2 分钟"],stepsTitle:"跟着步骤做",stepLabel:"第{n}步",condBadge:"只有被问到时",steps:[
+{t:"打开 my.telegram.org",d:"在浏览器里打开 my.telegram.org，输入你的 Telegram 账号手机号，记得加国家区号。"},
+{t:"在 Telegram 里收验证码",d:"确认码不会发短信，而是直接发到你的 Telegram 应用里。打开 Telegram，找到服务通知。"},
+{t:"找到网页登录码",d:"这条消息叫 “Web login code”。红圈标出了验证码所在的位置。千万不要把这个码告诉任何人。"},
+{t:"输入验证码并登录",d:"把验证码填到网站上，点 “Sign in”。如果验证码过期了，点 “Resend” 用新的。"},
+{t:"打开 API 开发工具",d:"登录后你会看到自己的 Telegram 应用。点开你的应用，这个页面叫 “Your Telegram Core”。"},
+{t:"复制 api_id 和 api_hash",d:"在应用页面复制你的 App api_id 和 App api_hash。还没有应用？先创建一个，随便填个 App title 和 Short name 就行，其他可以留空。"},
+{t:"粘贴到 TeleNest 里",d:"在 TeleNest 里打开 “Add Another Account”，粘贴 API ID、API Hash 和同一个手机号，然后点 “Next”。"},
+{t:"输入应用登录码",d:"这时 Telegram 会往你的应用里发一个数字验证码。在 TeleNest 里输入并确认，红圈标出了验证码发到哪里。"},
+{t:"只有被问到时：你的 Telegram 密码",d:"如果你的 Telegram 账号设过密码，就会出这个界面。在这里输入你自己的 Telegram 密码就好，这不是什么新密码，TeleNest 本身也没有单独的密码。如果你从来没设过密码，这一步根本不会出现。",cond:true}],
+doneTitle:"搞定，你的网盘已经就绪",doneText:"TeleNest 已经连上了你的 Telegram 账号。你的文件、照片和视频都会存在你自己的 Telegram 空间里。",safetyTitle:"这些一定要保密",safety:["你的 api_hash 是一把密钥。不要发给任何人，也不要公开发到网上。","登录码几分钟就过期，而且只能用一次。Telegram 的任何人都绝对不会找你要验证码。","截图里的验证码和数值都是处理过的示例，不是真实凭证。"],faqTitle:"常见问题",faq:[
+{q:"为什么验证码发到 Telegram，而不是短信？",a:"因为你登录的是 Telegram 自己的开发者网站，所以验证码是以 Telegram 消息的形式发来的。打开应用，看看服务通知就行。"},
+{q:"我在 my.telegram.org 上还没有应用，怎么办？",a:"新建一个应用。App title 和 Short name 随便填就行，比如 “My Drive” 和 “mydrive”，其他都是可选的。"},
+{q:"出现了密码界面，是不是我做错了？",a:"没有。这就是 Telegram 的两步验证。只有你以前给 Telegram 账号设过密码时才会出现，输入原来那个密码就行。"},
+{q:"我看到一个不是我登录的记录，怎么办？",a:"打开 Telegram，进设置 → 设备，把不认识的会话结束掉，然后再改一下密码。"}],
+foot:"为 TeleNest 用户制作 · Telegram 官网：my.telegram.org · TeleNest 下载：telenest.hasibulla.live"};
+function esc(s){return s}
+function render(code){
+  var meta=LANGS.find(function(l){return l.code===code})||LANGS[0];
+  var t=T[code]||T.en;
+  document.documentElement.lang=code;
+  document.documentElement.dir=meta.dir;
+  document.title=t.heroTitle+" — TeleNest";
+  document.getElementById("brandTag").textContent=t.tag;
+  document.getElementById("heroTitle").innerHTML=t.heroTitle.replace("TeleNest","<span>TeleNest</span>");
+  document.getElementById("heroSub").textContent=t.heroSub;
+  document.getElementById("needTitle").textContent=t.needTitle;
+  document.getElementById("needChips").innerHTML=t.need.map(function(n){return "<span class=chip><b>✓</b>"+n+"</span>"}).join("");
+  document.getElementById("stepsTitle").textContent=t.stepsTitle;
+  var html="";
+  t.steps.forEach(function(s,i){
+    var imgs=IMGS[i];
+    var cls=imgs.length>1?"imgs two":"imgs";
+    var imgHtml=imgs.map(function(src,j){return "<img src=\""+src+"\" alt=\"\" loading=\""+(i===0&&j===0?"eager":"lazy")+"\">"}).join("");
+    html+="<article class=step id=\"step-"+(i+1)+"\"><div><div class=step-num><span class=n>"+t.stepLabel.replace("{n}",i+1)+"</span>"+(s.cond?"<span class=cond>"+t.condBadge+"</span>":"")+"</div><h3>"+s.t+"</h3><p>"+s.d+"</p></div><div class=\""+cls+"\">"+imgHtml+"</div></article>";
+  });
+  document.getElementById("steps").innerHTML=html;
+  document.getElementById("doneTitle").textContent=t.doneTitle;
+  document.getElementById("doneText").textContent=t.doneText;
+  document.getElementById("safetyTitle").textContent=t.safetyTitle;
+  document.getElementById("safetyList").innerHTML=t.safety.map(function(s){return "<li>"+s+"</li>"}).join("");
+  document.getElementById("faqTitle").textContent=t.faqTitle;
+  document.getElementById("faq").innerHTML=t.faq.map(function(f){return "<details><summary>"+f.q+"</summary><p>"+f.a+"</p></details>"}).join("");
+  document.getElementById("foot").textContent=t.foot;
+  document.querySelectorAll("#langBar button").forEach(function(b){b.classList.toggle("on",b.dataset.lang===code)});
+  try{localStorage.setItem("tn-lang",code)}catch(e){}
+  var u=new URL(location.href);u.searchParams.set("lang",code);history.replaceState(null,"",u);
+}
+function setTheme(th){
+  document.documentElement.dataset.theme=th;
+  var btn=document.getElementById("themeBtn");
+  if(btn)btn.textContent=(th==="dark")?"☀️":"🌙";
+  try{localStorage.setItem("tn-theme",th)}catch(e){}
+}
+(function(){
+  var saved=null;try{saved=localStorage.getItem("tn-theme")}catch(e){}
+  setTheme(saved==="light"?"light":"dark");
+  document.getElementById("themeBtn").onclick=function(){
+    setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
+  };
+})();
+(function(){
+  var bar=document.getElementById("langBar");
+  LANGS.forEach(function(l){
+    var b=document.createElement("button");
+    b.textContent=l.name;b.dataset.lang=l.code;
+    b.onclick=function(){render(l.code)};
+    bar.appendChild(b);
+  });
+  var start="en";
+  try{
+    var q=new URLSearchParams(location.search).get("lang");
+    var saved=null;try{saved=localStorage.getItem("tn-lang")}catch(e){}
+    if(q&&T[q])start=q;else if(saved&&T[saved])start=saved;
+  }catch(e){}
+  render(start);
+})();
+</script>
+</body>
+</html>
